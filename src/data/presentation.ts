@@ -16,7 +16,7 @@ const presentation: Presentation = {
   title: "Hi, I’m Arvind 👋",
   // profile: "/profile.webp",
   description:
-    "Hello, I'm a *software developer* with over *1.5 years* of experience. I mostly do *devops and backend*. I am currently working with *Node JS and Golang* for development and documenting my devops R&D stuff in my Github. Outside of work I do twitch streaming and learning Frontend.",
+    "Hello, I'm a *software developer* with over *2 years* of experience. I love building *SaaS and AI applications*. I build products from 0 to 1 and do both frontend, backend and devops. Outside of work I enjoy contributing to *open source* projects and doing twitch streaming. \n\n If you need any assistance or have any questions, feel free to reach. me.",
   socials: [
     {
       label: "X",
@@ -30,6 +30,10 @@ const presentation: Presentation = {
       label: "Github",
       link: "https://github.com/Arvind644",
     },
+    {
+        label: "LinkedIn",
+        link: "https://www.linkedin.com/in/arvind-singharpuria-a88686202/",
+      },
   ],
 };
 
