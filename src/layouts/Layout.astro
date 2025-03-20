@@ -17,7 +17,7 @@ const headTags = Astro.props;
 <html lang="en">
   <SEOTags {...headTags} />
   <body
-    class="mx-auto flex min-h-screen max-w-[872px] flex-col gap-9 bg-neutral-950 px-10 py-8 text-sm text-neutral-400 md:gap-20 md:py-16"
+    class="mx-auto flex min-h-screen max-w-[872px] flex-col gap-9 bg-neutral-50 px-10 py-8 text-sm text-neutral-600 dark:bg-neutral-950 dark:text-neutral-400 md:gap-20 md:py-16"
   >
     <Header />
     <BlurCircle position="top" color={theme.colors.blur.top} />
@@ -25,3 +25,22 @@ const headTags = Astro.props;
     <slot />
   </body>
 </html>
+
+<script is:inline>
+  // Set initial theme on page load
+  const theme = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  })();
+
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+</script>
