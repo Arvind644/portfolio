@@ -1,0 +1,49 @@
+---
+import formatDate from "@/utils/formatDate";
+import Link from "./shared/Link.astro";
+
+type Props = {
+  title: string;
+  event: string;
+  date: Date;
+  location: string;
+  description: string;
+  videoUrl?: string;
+  slidesUrl?: string;
+  tags?: string[];
+};
+
+const { title, event, date, location, description, videoUrl, slidesUrl, tags } = Astro.props;
+---
+
+<div class="flex w-full flex-col gap-4 rounded-md border border-neutral-300 p-6 dark:border-neutral-700">
+  <div class="flex flex-col gap-2">
+    <h3 class="text-xl font-medium text-neutral-800 dark:text-neutral-100">{title}</h3>
+    <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+      <span>{event}</span>
+      <span>•</span>
+      <span>{formatDate(date)}</span>
+      <span>•</span>
+      <span>{location}</span>
+    </div>
+  </div>
+
+  <p class="text-neutral-700 dark:text-neutral-300">{description}</p>
+
+  <div class="flex flex-wrap gap-2">
+    {tags?.map((tag) => (
+      <span class="rounded-full bg-neutral-200 px-3 py-1 text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+        {tag}
+      </span>
+    ))}
+  </div>
+
+  <div class="flex gap-4">
+    {videoUrl && (
+      <Link href={videoUrl} label="Watch Recording" />
+    )}
+    {slidesUrl && (
+      <Link href={slidesUrl} label="View Slides" />
+    )}
+  </div>
+</div> 
