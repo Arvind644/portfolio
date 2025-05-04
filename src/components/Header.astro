@@ -32,6 +32,16 @@ const pathname = removeTrailingSlash(Astro.url.pathname);
           }}>Posts</a
         >
       </li>
+      <li class="text-neutral-600 dark:text-neutral-400">/</li>
+      <li>
+        <a
+          href="/speaking"
+          class:list={{
+            ["text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-100 dark:text-neutral-400"]: true,
+            ["text-neutral-800 dark:text-neutral-100"]: pathname === "/speaking",
+          }}>Speaking</a
+        >
+      </li>
     </ul>
     <ThemeToggle />
   </nav>

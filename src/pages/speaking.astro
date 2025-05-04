@@ -1,0 +1,35 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import TalkCard from "@/components/TalkCard.astro";
+import talks from "@/data/speaking";
+---
+
+<Layout>
+  <main class="flex flex-col gap-12">
+    <article class="flex flex-col gap-8">
+      <header>
+        <h1 class="text-3xl text-neutral-800 dark:text-neutral-100">Speaking</h1>
+        <p class="mt-4 text-neutral-700 dark:text-neutral-300">
+          I love sharing my knowledge and experiences with the community. Here are some of my talks and presentations at conferences and meetups.
+        </p>
+      </header>
+
+      <section class="flex flex-col gap-6">
+        {talks.length === 0 ? (
+          <p>No talks available yet. Stay tuned for upcoming events!</p>
+        ) : (
+          talks.map((talk) => <TalkCard {...talk} />)
+        )}
+      </section>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header>
+        <h2 class="text-2xl text-neutral-800 dark:text-neutral-100">Interested in having me speak?</h2>
+      </header>
+      <p class="text-neutral-700 dark:text-neutral-300">
+        I'm always open to speaking opportunities at conferences, meetups, and workshops. If you'd like me to speak at your event, please reach out to me via email or social media.
+      </p>
+    </article>
+  </main>
+</Layout> 
