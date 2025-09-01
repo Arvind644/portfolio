@@ -12,15 +12,15 @@ type Presentation = {
 };
 
 const presentation: Presentation = {
-  mail: "",
+  mail: "hello@arvind.app",
   title: "Hi, I’m Arvind 👋",
   // profile: "/profile.webp",
   description:
-    "Hello, I'm a *software developer* with over *2 years* of experience. I love building *SaaS and AI applications*. I build products from 0 to 1 and do both frontend, backend and devops. Outside of work I enjoy contributing to *open source* projects and doing twitch streaming. \n\n If you need any assistance or have any questions, feel free to reach. me.",
+    "Building software is both my *passion* and my *profession*. I am a *Full Stack software crafter* with *3 years of industry experience* specialised in building and scaling *cloud-native web applications*. I have a solid background in producing software with state-of-the-art technologies. I am a big fan of AI tools, with the ultimate goal of creating software that makes customers happy. In addition, I am a contributor and active member of open-source communities. I have demonstrated a strong ability to create developer-focused content that empoweres engineers to write better softawre and grow their careers. \n\n If you need any assistance or have any questions, feel free to reach me.",
   socials: [
     {
       label: "X",
-      link: "https://twitter.com/Arvind_0602",
+      link: "https://x.com/ai_arvind",
     },
     // {
     //   label: "Bento",
@@ -32,7 +32,7 @@ const presentation: Presentation = {
     },
     {
         label: "LinkedIn",
-        link: "https://www.linkedin.com/in/arvind-singharpuria-a88686202/",
+        link: "https://www.linkedin.com/in/arvind-singharpuria",
       },
   ],
 };
