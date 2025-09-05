@@ -53,10 +53,7 @@ const posts = (await getCollection("posts")).sort(function (first, second) {
 
     <article class="flex flex-col gap-8">
       <header>
-        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Friends I've worked with</h3>
-        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-          Companies and organizations I've had the pleasure to collaborate with
-        </p>
+        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Firms I have worked for</h3>
       </header>
       
       {companies.length === 0 && <p>No companies to show yet.</p>}
