@@ -1,0 +1,41 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"img"> & {
+  name: string;
+  logo: string;
+  website?: string;
+  description?: string;
+};
+
+const { name, logo, website, description, ...props } = Astro.props;
+---
+
+{website ? (
+  <a
+    href={website}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex items-center justify-center p-2"
+    title={description ? `${name} - ${description}` : name}
+  >
+    <img
+      src={logo}
+      alt={`${name} logo`}
+      class="h-12 w-full object-contain"
+      {...props}
+    />
+  </a>
+) : (
+  <div
+    class="flex items-center justify-center p-2"
+    title={description ? `${name} - ${description}` : name}
+  >
+    <img
+      src={logo}
+      alt={`${name} logo`}
+      class="h-12 w-full object-contain"
+      {...props}
+    />
+  </div>
+)}

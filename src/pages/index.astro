@@ -6,11 +6,14 @@ import Layout from "@/layouts/Layout.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import PostCard from "@/components/PostCard.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
+import CompanyLogo from "@/components/CompanyLogo.astro";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel.astro";
 import Link from "@/components/shared/Link.astro";
 import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
 
 import presentation from "@/data/presentation";
 import projects from "@/data/projects";
+import companies from "@/data/companies";
 
 const posts = (await getCollection("posts")).sort(function (first, second) {
   return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
@@ -46,6 +49,35 @@ const posts = (await getCollection("posts")).sort(function (first, second) {
 
         <SocialLinks />
       </div>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header>
+        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Friends I've worked with</h3>
+        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+          Companies and organizations I've had the pleasure to collaborate with
+        </p>
+      </header>
+      
+      {companies.length === 0 && <p>No companies to show yet.</p>}
+
+      <section class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
+        {
+          companies.length !== 0 &&
+            companies.map((company) => <CompanyLogo {...company} />)
+        }
+      </section>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header>
+        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">What people say</h3>
+        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+          Testimonials from clients and colleagues I've worked with
+        </p>
+      </header>
+      
+      <TestimonialsCarousel />
     </article>
 
     <article class="flex flex-col gap-8">

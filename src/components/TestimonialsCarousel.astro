@@ -1,0 +1,55 @@
+---
+import TestimonialCard from "./TestimonialCard.astro";
+import testimonials from "@/data/testimonials";
+---
+
+<div class="testimonials-carousel-container overflow-hidden">
+  <div class="testimonials-carousel flex gap-6 animate-scroll">
+    {testimonials.map((testimonial) => (
+      <TestimonialCard {...testimonial} />
+    ))}
+    {/* Duplicate testimonials for seamless loop */}
+    {testimonials.map((testimonial) => (
+      <TestimonialCard {...testimonial} />
+    ))}
+  </div>
+</div>
+
+<style>
+  .testimonials-carousel-container {
+    width: 100%;
+  }
+
+  .testimonials-carousel {
+    animation: scroll-left 30s linear infinite;
+    width: calc(320px * 10 + 24px * 9); /* 320px per card + 24px gap */
+  }
+
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-320px * 5 - 24px * 4)); /* Move by half the width */
+    }
+  }
+
+  .testimonials-carousel:hover {
+    animation-play-state: paused;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-carousel {
+      width: calc(280px * 10 + 16px * 9);
+    }
+    
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-280px * 5 - 16px * 4));
+      }
+    }
+  }
+</style>
