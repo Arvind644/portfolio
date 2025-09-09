@@ -4,11 +4,12 @@ import type { HTMLAttributes } from "astro/types";
 type Props = HTMLAttributes<"img"> & {
   name: string;
   logo: string;
+  darkLogo?: string;
   website?: string;
   description?: string;
 };
 
-const { name, logo, website, description, ...props } = Astro.props;
+const { name, logo, darkLogo, website, description, ...props } = Astro.props;
 ---
 
 {website ? (
@@ -19,23 +20,57 @@ const { name, logo, website, description, ...props } = Astro.props;
     class="flex items-center justify-center p-2"
     title={description ? `${name} - ${description}` : name}
   >
-    <img
-      src={logo}
-      alt={`${name} logo`}
-      class="h-12 w-full object-contain"
-      {...props}
-    />
+    {darkLogo ? (
+      <>
+        <img
+          src={logo}
+          alt={`${name} logo`}
+          class="h-16 w-full object-contain dark:hidden"
+          {...props}
+        />
+        <img
+          src={darkLogo}
+          alt={`${name} logo`}
+          class="h-16 w-full object-contain hidden dark:block"
+          {...props}
+        />
+      </>
+    ) : (
+      <img
+        src={logo}
+        alt={`${name} logo`}
+        class="h-16 w-full object-contain"
+        {...props}
+      />
+    )}
   </a>
 ) : (
   <div
     class="flex items-center justify-center p-2"
     title={description ? `${name} - ${description}` : name}
   >
-    <img
-      src={logo}
-      alt={`${name} logo`}
-      class="h-12 w-full object-contain"
-      {...props}
-    />
+    {darkLogo ? (
+      <>
+        <img
+          src={logo}
+          alt={`${name} logo`}
+          class="h-16 w-full object-contain dark:hidden"
+          {...props}
+        />
+        <img
+          src={darkLogo}
+          alt={`${name} logo`}
+          class="h-16 w-full object-contain hidden dark:block"
+          {...props}
+        />
+      </>
+    ) : (
+      <img
+        src={logo}
+        alt={`${name} logo`}
+        class="h-16 w-full object-contain"
+        {...props}
+      />
+    )}
   </div>
 )}
