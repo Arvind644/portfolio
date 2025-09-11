@@ -17,6 +17,14 @@ const testimonials: Testimonial[] = [
     linkedinUrl: "https://www.linkedin.com/in/tracy-ragan-oms/"
   },
   {
+    name: "Daniel Moka",
+    role: "Software Craftsman",
+    company: "Moka IT Engineering; LinkedIn Influencer",
+    avatar: "/img/testimonials/daniel-moka.jfif",
+    content: "We’ve been collaborating since 2020, and I can say with confidence: \n\n Arvind is one of the most driven, skilled, and creative developers I’ve ever worked with. \n\n What makes him stand out is his deep expertise across modern web technologies like React, Next.js, Node.js, and cloud platforms such as Azure and Vercel. He also brings strong DevOps experience and has been an active open-source contributor and community builder for years. \n\nI can wholeheartedly recommend Arvind to anyone. It’s truly a pleasure to work with him.",
+    linkedinUrl: "https://www.linkedin.com/in/danielmoka/"
+  },
+  {
     name: "Tony Carrato",
     role: "Board Advisor",
     company: "Ortelius, ex IBM",
@@ -37,7 +45,7 @@ const testimonials: Testimonial[] = [
     role: "Principal Architect",
     company: "Red Hat; Ambassador @ CNCF / PlatformEngineering",
     avatar: "/img/testimonials/sergio-canales.jfif",
-    content: "First of all Arvind is an amazing person, has the right attitude to be successful, humble, hardworking and dedication to learn very fast, hi jump directly into the cloud native world what is very hard by the complexity and many technologies related. Now is a promising professional for modern companies who are looking for future solutions.",
+    content: "First of all Arvind is an amazing person, has the right attitude to be successful, humble, hardworking and dedication to learn very fast, he jump directly into the cloud native world what is very hard by the complexity and many technologies related. Now is a promising professional for modern companies who are looking for future solutions.",
     linkedinUrl: "https://www.linkedin.com/in/sergio-canales-espinoza/"
   },
   {

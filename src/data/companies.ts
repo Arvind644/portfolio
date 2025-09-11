@@ -71,6 +71,18 @@ const companies: Company[] = [
     darkLogo: "/img/companies/pmc.webp",
     website: "https://parkingmgt.com/",
     description: "Automation Engineer"
+  },
+  {
+    name: "Profilkep",
+    logo: "/img/companies/profilkep.png",
+    darkLogo: "/img/companies/profilkep-light.png",
+    website: "https://profilkep.hu/",
+    description: "Full Stack Developer"
+  },
+  {
+    name: "ViralPost",
+    logo: "/img/companies/viralpost.png",
+    description: "Full Stack Developer"
   }
 ];
 
