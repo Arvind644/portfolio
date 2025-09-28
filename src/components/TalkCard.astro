@@ -11,39 +11,85 @@ type Props = {
   videoUrl?: string;
   slidesUrl?: string;
   tags?: string[];
+  screenshot?: string;
+  hoverText?: string;
 };
 
-const { title, event, date, location, description, videoUrl, slidesUrl, tags } = Astro.props;
+const { title, event, date, location, description, videoUrl, slidesUrl, tags, screenshot, hoverText } = Astro.props;
 ---
 
-<div class="flex w-full flex-col gap-4 rounded-md border border-neutral-300 p-6 dark:border-neutral-700">
-  <div class="flex flex-col gap-2">
-    <h3 class="text-xl font-medium text-neutral-800 dark:text-neutral-100">{title}</h3>
-    <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
-      <span>{event}</span>
-      <span>•</span>
-      <span>{formatDate(date)}</span>
-      <span>•</span>
-      <span>{location}</span>
+<div class="group flex w-full gap-6 rounded-md border border-neutral-300 p-6 dark:border-neutral-700 transition-all duration-300 hover:-translate-y-1 hover:border-neutral-600 dark:hover:border-neutral-400">
+  {screenshot && (
+    <div class="relative overflow-hidden rounded-md flex-shrink-0 w-48">
+      {videoUrl ? (
+        <a
+          href={videoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block cursor-pointer"
+        >
+          <img
+            src={screenshot}
+            alt={`${title} screenshot`}
+            class="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          {hoverText && (
+            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div class="text-center">
+                <p class="text-white px-2 text-xs font-medium mb-1">{hoverText}</p>
+                <p class="text-white text-xs opacity-80">Click to watch</p>
+              </div>
+            </div>
+          )}
+        </a>
+      ) : (
+        <>
+          <img
+            src={screenshot}
+            alt={`${title} screenshot`}
+            class="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          {hoverText && (
+            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <p class="text-white text-center px-2 text-xs font-medium">{hoverText}</p>
+            </div>
+          )}
+        </>
+      )}
     </div>
-  </div>
+  )}
 
-  <p class="text-neutral-700 dark:text-neutral-300">{description}</p>
+  <div class="flex flex-col gap-4 flex-1">
+    <div class="flex flex-col gap-2">
+      <h3 class="text-xl font-medium text-neutral-800 dark:text-neutral-100">{title}</h3>
+      <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+        <span>{event}</span>
+        <span>•</span>
+        <span>{formatDate(date)}</span>
+        <span>•</span>
+        <span>{location}</span>
+      </div>
+    </div>
 
-  <div class="flex flex-wrap gap-2">
-    {tags?.map((tag) => (
-      <span class="rounded-full bg-neutral-200 px-3 py-1 text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
-        {tag}
-      </span>
-    ))}
-  </div>
+    <p class="text-neutral-700 dark:text-neutral-300">{description}</p>
 
-  <div class="flex gap-4">
-    {videoUrl && (
-      <Link href={videoUrl} label="Watch Recording" />
+    {tags && tags.length > 0 && (
+      <div class="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+          <span class="rounded-full bg-neutral-200 px-3 py-1 text-xs text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+            {tag}
+          </span>
+        ))}
+      </div>
     )}
-    {slidesUrl && (
-      <Link href={slidesUrl} label="View Slides" />
-    )}
+
+    <!-- <div class="flex gap-4">
+      {videoUrl && (
+        <Link href={videoUrl} label="Watch Recording" />
+      )}
+      {slidesUrl && (
+        <Link href={slidesUrl} label="View Slides" />
+      )}
+    </div> -->
   </div>
 </div> 

@@ -1,7 +1,11 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import SocialLinks from "@/components/SocialLinks.astro";
+import Link from "@/components/shared/Link.astro";
 import TalkCard from "@/components/TalkCard.astro";
 import talks from "@/data/speaking";
+
+import presentation from "@/data/presentation";
 ---
 
 <Layout>
@@ -14,7 +18,7 @@ import talks from "@/data/speaking";
         </p>
       </header>
 
-      <section class="flex flex-col gap-6">
+      <section class="flex flex-col gap-6 max-w-3xl">
         {talks.length === 0 ? (
           <p>No talks available yet. Stay tuned for upcoming events!</p>
         ) : (
@@ -30,6 +34,20 @@ import talks from "@/data/speaking";
       <p class="text-neutral-700 dark:text-neutral-300">
         I'm always open to speaking opportunities at conferences, meetups, and workshops. If you'd like me to speak at your event, please reach out to me via email or social media.
       </p>
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row justify-between gap-2">
+        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Get in touch</h3>
+      </header>
+      <p>
+        Email me at <Link
+          href={`mailto:${presentation.mail}`}
+          label={presentation.mail}
+        /> or follow me via my social links.
+      </p>
+
+      <SocialLinks />
     </article>
   </main>
 </Layout> 

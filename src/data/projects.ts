@@ -4,37 +4,33 @@ export type Project = {
   link: string;
   isComingSoon?: boolean;
   description?: string;
+  screenshot?: string;
+  hoverText?: string;
 };
 
 const projects: Project[] = [
     {
-    title: "AI project - Fitness Assistant",
-    techs: ["Python", "OpenAI", "Docker", "Flask", "Postgresql", "Grafana"],
-    link: "https://github.com/Arvind644/QA-Chatbot",
-    description: "Staying consistent with fitness routines is challenging, especially for beginners. Gyms can be intimidating, and personal trainers aren't always available. \nThe Fitness Assistant provides a conversational AI that helps users choose exercises and find alternatives, making fitness more manageable.",
+    title: "AI SaaS - Rechat",
+    techs: ["Next JS", "Tailwind CSS", "Shadcn UI", "Clerk", "Prisma", "Postgresql", "OpenAI"],
+    link: "https://rechat.vc/",
+    description: "A SaaS platform to manage networking from all social media platforms in one place and get daily networking tasks to grow your network.",
+    screenshot: "/img/projects/rechat-landing-page.png",
+    hoverText: "AI-powered networking platform with social media integration",
   },
   {
-    title: "SaaS - lms-platform",
-    techs: ["Next JS", "Tailwind CSS", "Shadcn UI", "Clerk", "Prisma", "MYSQL"],
-    link: "https://github.com/Arvind644/lms-platform",
-    description: "It is a LMS platform allowing Creators to create their courses with chapters and video streaming, and allowing students to access the course after purchase the course using Stripe.",
-  },
-  {
-    title: "AI project - QA Chatbot",
-    techs: ["Streamlit", "OpenAI", "Langchain", "ChromaDB", "Python"],
-    link: "https://github.com/Arvind644/QA-Chatbot",
-    description: "This is a QA chatbot, that answers question related to a fictional company named Red30 Shoes. It also stores context with chat history in the memory. You can access the application using UI and as a CLI app.",
-  },
-  {
-    title: "AI project - Chat with PDF RAG",
-    techs: ["Chainlit", "OpenAI", "Langchain", "ChromaDB", "Python"],
-    link: "https://github.com/Arvind644/chainlit-llm-app",
-    description: "This is a Chat with PDF RAG application, that take pdf as input and you can query your questions and the application will give answer based on context available in the pdf.",
+    title: "AI SaaS - profilkep",
+    techs: ["Next JS", "Tailwind CSS", "Shadcn UI", "Clerk", "Prisma", "Supabase"],
+    link: "https://profilkep.hu/",
+    description: "Full-stack platform for generating professional profile pictures with credit system and payment integration.",
+    screenshot: "/img/projects/profilkep-landing-page.png",
+    hoverText: "Full-stack platform for generating professional profile pictures",
   },
   {
     title: "Ortelius (Open Source)",
     techs: ["docker", "kubernetes", "Golang", "github actions"],
     link: "https://github.com/pulls?q=is%3Apr+author%3AArvind644+archived%3Afalse+is%3Aclosed+user%3Aortelius",
+    screenshot: "/img/projects/ortelius.png",
+    hoverText: "Open source contributions to microservice cataloging and management tools",
   },
 ];
 

@@ -1,7 +1,7 @@
 ---
 import removeTrailingSlash from "@/utils/removeTrailingSlash";
 import presentation from "@/data/presentation";
-import ThemeToggle from "./ThemeToggle.astro";
+// import ThemeToggle from "./ThemeToggle.astro";
 
 const pathname = removeTrailingSlash(Astro.url.pathname);
 ---
@@ -25,11 +25,21 @@ const pathname = removeTrailingSlash(Astro.url.pathname);
       <li class="text-neutral-600 dark:text-neutral-400">/</li>
       <li>
         <a
-          href="/posts"
+          href="/tutorials"
           class:list={{
             ["text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-100 dark:text-neutral-400"]: true,
-            ["text-neutral-800 dark:text-neutral-100"]: pathname === "/posts",
-          }}>Posts</a
+            ["text-neutral-800 dark:text-neutral-100"]: pathname === "/tutorials",
+          }}>Tutorials</a
+        >
+      </li>
+      <li class="text-neutral-600 dark:text-neutral-400">/</li>
+      <li>
+        <a
+          href="/projects"
+          class:list={{
+            ["text-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-100 dark:text-neutral-400"]: true,
+            ["text-neutral-800 dark:text-neutral-100"]: pathname === "/projects",
+          }}>Projects</a
         >
       </li>
       <li class="text-neutral-600 dark:text-neutral-400">/</li>
@@ -43,6 +53,6 @@ const pathname = removeTrailingSlash(Astro.url.pathname);
         >
       </li>
     </ul>
-    <ThemeToggle />
+    <!-- <ThemeToggle /> -->
   </nav>
 </header>

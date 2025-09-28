@@ -7,6 +7,8 @@ type Talk = {
   videoUrl?: string;
   slidesUrl?: string;
   tags?: string[];
+  screenshot?: string;
+  hoverText?: string;
 };
 
 const talks: Talk[] = [
@@ -17,6 +19,8 @@ const talks: Talk[] = [
     location: "Virtual",
     description: "Ortelius hoards an amazing amount of data. As we move the project forward, Data Science will allow us to leverage this data to pursue machine learning and predictive behavior of microservices shared across teams. Join Arvind, a data science enthusiast and brilliant University student as he shared is thoughts on the road forward to applying data science to the Ortelius project.",
     videoUrl: "https://www.youtube.com/watch?v=nuvxafqMm84",
+    screenshot: "/img/speaking/ortelius-talk.png",
+    hoverText: "Data Science insights for microservices management and predictive behavior",
     // slidesUrl: "https://example.com/talk-slides",
     // tags: ["Astro", "Web Development", "Performance"]
   },
