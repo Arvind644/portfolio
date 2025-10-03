@@ -56,20 +56,9 @@ import companies from "@/data/companies";
 
     <article class="flex flex-col gap-8">
       <header>
-        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Tech Stack</h3>
-        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-          My expertise across different technology domains
-        </p>
-      </header>
-
-      <TechStackRadar />
-    </article>
-
-    <article class="flex flex-col gap-8">
-      <header>
         <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Firms I worked for</h3>
       </header>
-      
+
       {companies.length === 0 && <p>No companies to show yet.</p>}
 
       <section class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
@@ -87,8 +76,19 @@ import companies from "@/data/companies";
           Testimonials from ex-clients and colleagues
         </p>
       </header>
-      
+
       <TestimonialsCarousel />
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header>
+        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Tech Stack</h3>
+        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+          My expertise across different technology domains
+        </p>
+      </header>
+
+      <TechStackRadar />
     </article>
 
     <article class="flex flex-col gap-8">
