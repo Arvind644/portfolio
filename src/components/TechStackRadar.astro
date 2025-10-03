@@ -1,0 +1,200 @@
+---
+import skills from '@/data/techStack';
+---
+
+<div class="tech-stack-container">
+  <div class="radar-section">
+    <canvas id="radarChart" width="500" height="500"></canvas>
+  </div>
+  <div class="skills-legend">
+    {skills.map((skill) => (
+      <div class="skill-item">
+        <h4 class="skill-name">{skill.name}</h4>
+        <p class="skill-list">{skill.subSkills.join(' / ')}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  import skills from '@/data/techStack';
+
+  const canvas = document.getElementById('radarChart') as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d');
+
+  if (ctx) {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 180;
+    const levels = 5;
+    const angleStep = (Math.PI * 2) / skills.length;
+
+    // Check if dark mode
+    const isDark = document.documentElement.classList.contains('dark');
+    const gridColor = isDark ? '#404040' : '#e5e5e5';
+    const textColor = isDark ? '#a3a3a3' : '#525252';
+    const fillColor = isDark ? 'rgba(250, 204, 21, 0.12)' : 'rgba(250, 204, 21, 0.15)';
+    const strokeColor = isDark ? '#fbbf24' : '#f59e0b';
+
+    // Draw grid levels
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+
+    for (let i = 1; i <= levels; i++) {
+      ctx.beginPath();
+      const levelRadius = (radius / levels) * i;
+
+      for (let j = 0; j <= skills.length; j++) {
+        const angle = angleStep * j - Math.PI / 2;
+        const x = centerX + Math.cos(angle) * levelRadius;
+        const y = centerY + Math.sin(angle) * levelRadius;
+
+        if (j === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+    // Draw axes
+    ctx.strokeStyle = gridColor;
+    ctx.lineWidth = 1;
+
+    skills.forEach((_, index) => {
+      const angle = angleStep * index - Math.PI / 2;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    });
+
+    // Draw data polygon
+    ctx.beginPath();
+    skills.forEach((skill, index) => {
+      const angle = angleStep * index - Math.PI / 2;
+      const value = (skill.value / 100) * radius;
+      const x = centerX + Math.cos(angle) * value;
+      const y = centerY + Math.sin(angle) * value;
+
+      if (index === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    });
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Draw data points
+    skills.forEach((skill, index) => {
+      const angle = angleStep * index - Math.PI / 2;
+      const value = (skill.value / 100) * radius;
+      const x = centerX + Math.cos(angle) * value;
+      const y = centerY + Math.sin(angle) * value;
+
+      ctx.beginPath();
+      ctx.arc(x, y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = strokeColor;
+      ctx.fill();
+    });
+
+    // Draw labels
+    ctx.fillStyle = textColor;
+    ctx.font = 'bold 15px system-ui, -apple-system, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    skills.forEach((skill, index) => {
+      const angle = angleStep * index - Math.PI / 2;
+      const labelRadius = radius + 35;
+      const x = centerX + Math.cos(angle) * labelRadius;
+      const y = centerY + Math.sin(angle) * labelRadius;
+
+      ctx.fillText(skill.name, x, y);
+    });
+  }
+
+  // Redraw on theme change
+  const observer = new MutationObserver(() => {
+    location.reload();
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  });
+</script>
+
+<style>
+  .tech-stack-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem 0;
+  }
+
+  .radar-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #radarChart {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .skills-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #171717;
+  }
+
+  :global(.dark) .skill-name {
+    color: #f5f5f5;
+  }
+
+  .skill-list {
+    font-size: 0.875rem;
+    color: #737373;
+    line-height: 1.5;
+  }
+
+  :global(.dark) .skill-list {
+    color: #a3a3a3;
+  }
+
+  @media (max-width: 768px) {
+    .tech-stack-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .skills-legend {
+      gap: 1.5rem;
+    }
+  }
+</style>

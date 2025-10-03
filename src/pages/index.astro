@@ -4,7 +4,9 @@ import { Image } from "astro:assets"
 import Layout from "@/layouts/Layout.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import CompanyLogo from "@/components/CompanyLogo.astro";
+import Link from "@/components/shared/Link.astro";
 import TestimonialsCarousel from "@/components/TestimonialsCarousel.astro";
+import TechStackRadar from "@/components/TechStackRadar.astro";
 import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
 
 import presentation from "@/data/presentation";
@@ -34,17 +36,38 @@ import companies from "@/data/companies";
         </h1>
 
         <h2
-          class="w-auto max-w-[100ch] leading-6 whitespace-pre-line text-neutral-700 dark:text-neutral-400"
-          set:html={convertAsteriskToStrongTag(presentation.description)}
-        />
+          class="w-auto max-w-[100ch] leading-6 text-neutral-700 dark:text-neutral-400"
+        >
+          I specialise in 3 things:
+          <button class="specialization-btn font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer" data-category="fullstack">
+            Full stack development
+          </button>,
+          <button class="specialization-btn font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer" data-category="devops">
+            DevOps
+          </button> &
+          <button class="specialization-btn font-semibold text-neutral-900 dark:text-neutral-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer" data-category="ai">
+            AI Prototyping
+          </button>
+        </h2>
 
-        <SocialLinks />
+        <!-- <SocialLinks /> -->
       </div>
     </article>
 
     <article class="flex flex-col gap-8">
       <header>
-        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Firms I worked for</h3>
+        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Tech Stack</h3>
+        <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+          My expertise across different technology domains
+        </p>
+      </header>
+
+      <TechStackRadar />
+    </article>
+
+    <article class="flex flex-col gap-8">
+      <header>
+        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Firms I worked for</h3>
       </header>
       
       {companies.length === 0 && <p>No companies to show yet.</p>}
@@ -59,7 +82,7 @@ import companies from "@/data/companies";
 
     <article class="flex flex-col gap-8">
       <header>
-        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">What they say</h3>
+        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">What they say</h3>
         <p class="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
           Testimonials from ex-clients and colleagues
         </p>
@@ -68,6 +91,81 @@ import companies from "@/data/companies";
       <TestimonialsCarousel />
     </article>
 
+    <article class="flex flex-col gap-8">
+      <header class="flex w-full flex-row justify-between gap-2">
+        <h3 class="text-3xl text-neutral-800 dark:text-neutral-100">Get in touch</h3>
+      </header>
+      <p>
+        <Link
+          href="https://cal.com/arvind-singharpuria"
+          label="Schedule a call"
+          isUnderline={true}
+          class="font-semibold"
+        /> or follow me via my social links.
+      </p>
 
+      <SocialLinks />
+    </article>
   </main>
 </Layout>
+
+<script>
+  let activeCategory: string | null = null;
+
+  // Handle specialization button clicks
+  document.querySelectorAll('.specialization-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+
+      // Toggle category
+      if (activeCategory === category) {
+        activeCategory = null;
+        resetHighlight();
+      } else {
+        activeCategory = category;
+        highlightCategory(category);
+      }
+    });
+
+    // Handle hover effects
+    btn.addEventListener('mouseenter', () => {
+      if (!activeCategory) {
+        const category = btn.getAttribute('data-category');
+        highlightCategory(category);
+      }
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (!activeCategory) {
+        resetHighlight();
+      }
+    });
+  });
+
+  function highlightCategory(category: string | null) {
+    const allLogos = document.querySelectorAll('.company-logo');
+
+    allLogos.forEach(logo => {
+      const categories = logo.getAttribute('data-categories')?.split(',') || [];
+
+      if (category && categories.includes(category)) {
+        // Highlight matching logos
+        logo.classList.remove('opacity-30', 'blur-sm');
+        logo.classList.add('opacity-100', 'scale-110');
+      } else {
+        // Blur non-matching logos
+        logo.classList.remove('opacity-100', 'scale-110');
+        logo.classList.add('opacity-30', 'blur-sm');
+      }
+    });
+  }
+
+  function resetHighlight() {
+    const allLogos = document.querySelectorAll('.company-logo');
+
+    allLogos.forEach(logo => {
+      logo.classList.remove('opacity-30', 'blur-sm', 'scale-110');
+      logo.classList.add('opacity-100');
+    });
+  }
+</script>

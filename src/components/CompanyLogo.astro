@@ -7,9 +7,10 @@ type Props = HTMLAttributes<"img"> & {
   darkLogo?: string;
   website?: string;
   description?: string;
+  categories?: string[];
 };
 
-const { name, logo, darkLogo, website, description, ...props } = Astro.props;
+const { name, logo, darkLogo, website, description, categories, ...props } = Astro.props;
 ---
 
 {website ? (
@@ -17,7 +18,8 @@ const { name, logo, darkLogo, website, description, ...props } = Astro.props;
     href={website}
     target="_blank"
     rel="noopener noreferrer"
-    class="flex items-center justify-center p-2"
+    class="company-logo flex items-center justify-center p-2 transition-all duration-300"
+    data-categories={categories?.join(',')}
     title={description ? `${name} - ${description}` : name}
   >
     {darkLogo ? (
@@ -46,7 +48,8 @@ const { name, logo, darkLogo, website, description, ...props } = Astro.props;
   </a>
 ) : (
   <div
-    class="flex items-center justify-center p-2"
+    class="company-logo flex items-center justify-center p-2 transition-all duration-300"
+    data-categories={categories?.join(',')}
     title={description ? `${name} - ${description}` : name}
   >
     {darkLogo ? (
