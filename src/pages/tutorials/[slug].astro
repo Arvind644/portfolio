@@ -32,3 +32,34 @@ const { Content } = await post.render();
     <Content />
   </main>
 </Layout>
+
+<script>
+  // Add copy button to all code blocks
+  document.addEventListener('DOMContentLoaded', () => {
+    const codeBlocks = document.querySelectorAll('.post pre');
+
+    codeBlocks.forEach((pre) => {
+      // Create copy button
+      const button = document.createElement('button');
+      button.className = 'copy-code-btn absolute top-2 right-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300';
+      button.textContent = 'Copy';
+
+      // Add click handler
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code');
+        if (code) {
+          await navigator.clipboard.writeText(code.textContent || '');
+          button.textContent = 'Copied!';
+          button.classList.add('bg-green-500', 'text-white', 'dark:bg-green-600');
+
+          setTimeout(() => {
+            button.textContent = 'Copy';
+            button.classList.remove('bg-green-500', 'text-white', 'dark:bg-green-600');
+          }, 2000);
+        }
+      });
+
+      pre.appendChild(button);
+    });
+  });
+</script>

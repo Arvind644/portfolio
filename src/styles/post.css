@@ -1,25 +1,22 @@
 .post p {
-  @apply leading-7;
-}
-
-.post code {
-  @apply rounded-sm bg-neutral-800 px-1 py-[2px] text-orange-500;
+  @apply leading-7 text-neutral-700 dark:text-neutral-300;
 }
 
 .post h2 {
-  @apply mt-6 text-3xl text-neutral-100;
+  @apply mt-6 text-3xl text-neutral-800 dark:text-neutral-100;
 }
 
 .post h3 {
-  @apply mt-4 text-xl text-neutral-100;
+  @apply mt-4 text-xl text-neutral-800 dark:text-neutral-100;
 }
 
 .post code {
-  @apply rounded-sm bg-neutral-800 px-1 py-[2px] text-red-500;
+  @apply rounded-sm bg-neutral-200 dark:bg-neutral-800 px-1.5 py-0.5 text-sm font-mono;
+  @apply text-neutral-800 dark:text-neutral-200;
 }
 
 .post a {
-  @apply text-neutral-100 underline;
+  @apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300;
 }
 
 .post ul {
@@ -31,9 +28,11 @@
 }
 
 .post pre {
-  @apply p-4;
+  @apply relative rounded-lg p-4 my-4 overflow-x-auto border border-neutral-200 dark:border-neutral-700;
+  @apply bg-neutral-100 dark:bg-neutral-800;
+  @apply shadow-sm;
 }
 
 .post pre > code {
-  @apply bg-transparent;
+  @apply bg-transparent text-sm;
 }
