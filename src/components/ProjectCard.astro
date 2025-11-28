@@ -10,9 +10,9 @@ const formatTechs = (values: string[]) =>
   values.toString().replaceAll(",", " • ");
 ---
 
-<div class="w-full">
+<div class="w-full h-full">
   {isComingSoon ? (
-    <div class="group flex w-full flex-col justify-between gap-3 rounded-md border border-neutral-300 dark:border-neutral-700 p-4">
+    <div class="group flex w-full h-full flex-col gap-3 rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 p-4">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-semibold text-neutral-800 dark:text-neutral-100">{title}</h3>
         <div class="block">
@@ -24,7 +24,7 @@ const formatTechs = (values: string[]) =>
     </div>
   ) : (
     <a
-      class="group flex w-full cursor-pointer flex-col justify-between gap-4 rounded-md border border-neutral-300 dark:border-neutral-700 p-4 transition-all duration-300 hover:-translate-y-2 hover:border-neutral-600 dark:hover:border-neutral-400"
+      class="group flex w-full h-full cursor-pointer flex-col rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 p-4 transition-all duration-300 hover:-translate-y-2 hover:border-neutral-600 dark:hover:border-neutral-400"
       href={link}
       target="_blank"
       rel="noreferrer"
@@ -44,7 +44,7 @@ const formatTechs = (values: string[]) =>
         </div>
       )}
 
-      <div class="flex flex-col gap-3">
+      <div class="flex flex-col gap-3 flex-grow mt-2">
         <div class="flex items-center justify-between">
           <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{title}</h3>
           <svg
