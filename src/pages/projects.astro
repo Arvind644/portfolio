@@ -6,9 +6,14 @@ import ProjectCard from "@/components/ProjectCard.astro";
 import projects from "@/data/projects";
 
 import presentation from "@/data/presentation";
+import { PAGE_SEO } from "@/data/seo";
 ---
 
-<Layout>
+<Layout 
+  title={PAGE_SEO.projects.title}
+  description={PAGE_SEO.projects.description}
+  keywords={PAGE_SEO.projects.keywords}
+>
   <main class="flex flex-col gap-12">
     <article class="flex flex-col gap-8">
       <header>

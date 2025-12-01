@@ -2,6 +2,8 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import formatDate from "@/utils/formatDate";
+import { getArticleSchema, SEO_CONFIG } from "@/data/seo";
+import { SITE_URL } from "@/data/config";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -18,9 +20,30 @@ type Props = {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+const siteUrl = SITE_URL.endsWith('/') ? SITE_URL.slice(0, -1) : SITE_URL;
+const articleUrl = `${siteUrl}/tutorials/${post.slug}`;
+
+const articleSchema = getArticleSchema({
+  title: post.data.title,
+  description: post.data.description,
+  url: articleUrl,
+  publishedAt: post.data.publishedAt,
+  siteUrl,
+});
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout 
+  title={`${post.data.title} | ${SEO_CONFIG.siteName}`}
+  description={post.data.description}
+  keywords={["tutorial", "blog", "technical article"]}
+  jsonLd={articleSchema}
+  og={{
+    title: post.data.title,
+    type: "article",
+    description: post.data.description,
+  }}
+>
   <main class="post mx-auto flex w-full max-w-prose flex-col gap-4">
     <header role="presentation">
       <h1 class="text-md">

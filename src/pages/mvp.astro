@@ -8,9 +8,16 @@ import projects from "@/data/projects";
 import companies from "@/data/companies";
 
 import presentation from "@/data/presentation";
+import { PAGE_SEO, getServiceSchema } from "@/data/seo";
+import { SITE_URL } from "@/data/config";
 ---
 
-<Layout>
+<Layout 
+  title={PAGE_SEO.mvp.title}
+  description={PAGE_SEO.mvp.description}
+  keywords={PAGE_SEO.mvp.keywords}
+  jsonLd={getServiceSchema(SITE_URL)}
+>
   <main class="flex flex-col gap-12">
     <article class="flex flex-col gap-8 py-12">
       <header class="flex flex-col gap-6 text-center max-w-4xl mx-auto">
