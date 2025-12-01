@@ -6,9 +6,14 @@ import TalkCard from "@/components/TalkCard.astro";
 import talks from "@/data/speaking";
 
 import presentation from "@/data/presentation";
+import { PAGE_SEO } from "@/data/seo";
 ---
 
-<Layout>
+<Layout 
+  title={PAGE_SEO.speaking.title}
+  description={PAGE_SEO.speaking.description}
+  keywords={PAGE_SEO.speaking.keywords}
+>
   <main class="flex flex-col gap-12">
     <article class="flex flex-col gap-8">
       <header>

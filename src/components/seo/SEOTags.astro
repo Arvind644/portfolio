@@ -2,65 +2,118 @@
 import { SEO } from "astro-seo";
 import { AstroFont } from "astro-font";
 import { SITE_URL } from "@/data/config";
+import { SEO_CONFIG, getPersonSchema, getWebsiteSchema } from "@/data/seo";
 import type { HeadTags } from "@/utils/types/HeadTags";
 
 type Props = HeadTags;
 
-const { title, description, noindex, og } = Astro.props;
+const { 
+  title, 
+  description, 
+  noindex, 
+  og,
+  canonical,
+  jsonLd,
+  keywords = [],
+} = Astro.props;
 
-const DEFAULT_TITLE_PAGE = "Arvind Singharpuria - Portfolio website";
-const DEFAULT_DESCRIPTION_PAGE =
-  "A personal portfolio website containing blogs and projects.";
-const DEFAULT_URL_SITE = SITE_URL;
+const siteUrl = SITE_URL.endsWith('/') ? SITE_URL.slice(0, -1) : SITE_URL;
+const currentPath = Astro.url.pathname;
+const canonicalUrl = canonical || `${siteUrl}${currentPath}`;
+
+const pageTitle = title || SEO_CONFIG.defaultTitle;
+const pageDescription = description || SEO_CONFIG.defaultDescription;
 
 const openGraph = {
-  title: title || og?.title || DEFAULT_TITLE_PAGE,
-  type: og?.type || "website",
-  image: og?.image || "/opengraph-image.jpg",
-  alt: og?.alt || "astro portfolio template image",
-  url: DEFAULT_URL_SITE,
-  description: og?.description || DEFAULT_DESCRIPTION_PAGE,
+  title: og?.title || pageTitle,
+  type: og?.type || SEO_CONFIG.defaultOg.type,
+  image: og?.image || SEO_CONFIG.defaultOg.image,
+  alt: og?.alt || SEO_CONFIG.defaultOg.imageAlt,
+  url: canonicalUrl,
+  description: og?.description || pageDescription,
 };
+
+// Combine default and page-specific keywords
+const allKeywords = [...SEO_CONFIG.defaultKeywords, ...keywords].filter(
+  (keyword, index, self) => self.indexOf(keyword) === index
+);
+
+// Build JSON-LD schemas
+const defaultSchemas = [
+  getPersonSchema(siteUrl),
+  getWebsiteSchema(siteUrl),
+];
+
+const schemas = jsonLd 
+  ? [...defaultSchemas, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])]
+  : defaultSchemas;
+
+// Create full image URL
+const ogImageUrl = openGraph.image.startsWith('http') 
+  ? openGraph.image 
+  : `${siteUrl}${openGraph.image}`;
 ---
 
 <head>
   <SEO
     charset="UTF-8"
-    title={title || DEFAULT_TITLE_PAGE}
-    description={description || DEFAULT_DESCRIPTION_PAGE}
+    title={pageTitle}
+    description={pageDescription}
     noindex={noindex || false}
+    canonical={canonicalUrl}
     openGraph={{
       basic: {
         title: openGraph.title,
         type: openGraph.type,
-        image: openGraph.image,
+        image: ogImageUrl,
+        url: openGraph.url,
+      },
+      optional: {
+        description: openGraph.description,
+        locale: SEO_CONFIG.locale,
+        siteName: SEO_CONFIG.siteName,
       },
       image: {
         alt: openGraph.alt,
+        width: SEO_CONFIG.defaultOg.imageWidth,
+        height: SEO_CONFIG.defaultOg.imageHeight,
+        type: "image/jpeg",
       },
     }}
     twitter={{
-      creator: "@itsstormzz_",
+      card: "summary_large_image",
+      site: SEO_CONFIG.social.twitterSite,
+      creator: SEO_CONFIG.social.twitter,
+      title: openGraph.title,
+      description: openGraph.description,
+      image: ogImageUrl,
+      imageAlt: openGraph.alt,
     }}
     extend={{
       link: [
-        { rel: "icon", href: "/favicon.svg" },
+        { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
         { rel: "sitemap", href: "/sitemap-index.xml" },
+        { rel: "canonical", href: canonicalUrl },
       ],
       meta: [
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "generator", content: Astro.generator },
-        {
-          name: "twitter:image",
-          content: openGraph.image,
-        },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: openGraph.title },
-        { name: "twitter:description", content: openGraph.description },
-        { name: "twitter:site", content: "@itsstormzz_" },
+        { name: "author", content: SEO_CONFIG.author.name },
+        { name: "keywords", content: allKeywords.join(", ") },
+        { name: "theme-color", content: "#0a0a0a", media: "(prefers-color-scheme: dark)" },
+        { name: "theme-color", content: "#fafafa", media: "(prefers-color-scheme: light)" },
+        { name: "color-scheme", content: "light dark" },
+        { property: "og:locale", content: SEO_CONFIG.locale },
+        { property: "og:site_name", content: SEO_CONFIG.siteName },
       ],
     }}
   />
+  
+  <!-- JSON-LD Structured Data -->
+  {schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  ))}
+  
   <AstroFont
     config={[
       {

@@ -11,9 +11,14 @@ import convertAsteriskToStrongTag from "@/utils/convertAsteriskToStrongTag";
 
 import presentation from "@/data/presentation";
 import companies from "@/data/companies";
+import { PAGE_SEO } from "@/data/seo";
 ---
 
-<Layout>
+<Layout 
+  title={PAGE_SEO.home.title}
+  description={PAGE_SEO.home.description}
+  keywords={PAGE_SEO.home.keywords}
+>
   <main class="flex flex-col gap-20">
     <article
       class="flex flex-col gap-8 md:flex-row-reverse md:justify-end md:gap-12"

@@ -6,13 +6,18 @@ import Link from "@/components/shared/Link.astro";
 import formatDate from "@/utils/formatDate";
 
 import presentation from "@/data/presentation";
+import { PAGE_SEO } from "@/data/seo";
 
 const posts = (await getCollection("posts")).sort(function (first, second) {
   return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
 });
 ---
 
-<Layout title="Template - All Posts">
+<Layout 
+  title={PAGE_SEO.tutorials.title}
+  description={PAGE_SEO.tutorials.description}
+  keywords={PAGE_SEO.tutorials.keywords}
+>
   <main class="flex flex-col gap-20">
     <h1 class="text-2xl text-neutral-100">Posts</h1>
 
