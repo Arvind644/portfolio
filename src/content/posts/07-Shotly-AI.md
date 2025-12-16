@@ -2,7 +2,7 @@
 title: "Shotly AI : AI Headshot Generator"
 publishedAt: 2025-12-16
 description: ""
-slug: "Shotly AI"
+slug: "Shotly-AI"
 isPublish: true
 ---
 
