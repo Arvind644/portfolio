@@ -6,7 +6,7 @@ slug: "Shotly-AI"
 isPublish: true
 ---
 
-# AI Headshot Generator: Create Professional LinkedIn Photos in 60 Seconds
+## AI Headshot Generator: Create Professional LinkedIn Photos in 60 Seconds
 
 **TL;DR:** Shotly AI generates studio-quality professional headshots from a single selfie in under 60 seconds. No 20-photo uploads. No hour-long waits. Just instant, professional results. [Try it free →](https://shotlyai.com/)
 
