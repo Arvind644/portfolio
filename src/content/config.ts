@@ -8,6 +8,7 @@ const postsCollection = defineCollection({
     description: z.string(),
     isPublish: z.boolean(),
     isDraft: z.boolean().default(false),
+    tags: z.array(z.string()).optional(),
   }),
 });
 

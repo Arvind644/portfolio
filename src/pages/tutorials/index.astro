@@ -4,68 +4,90 @@ import Layout from "@/layouts/Layout.astro";
 import SocialLinks from "@/components/SocialLinks.astro";
 import Link from "@/components/shared/Link.astro";
 import formatDate from "@/utils/formatDate";
+import readingTime from "@/utils/readingTime";
 
 import presentation from "@/data/presentation";
 import { PAGE_SEO } from "@/data/seo";
 
-const posts = (await getCollection("posts")).sort(function (first, second) {
-  return second.data.publishedAt.getTime() - first.data.publishedAt.getTime();
-});
+const allPosts = (await getCollection("posts"))
+  .filter((post) => post.data.isPublish)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+// Group posts by year
+const postsByYear = allPosts.reduce<Record<number, typeof allPosts>>((acc, post) => {
+  const year = post.data.publishedAt.getFullYear();
+  if (!acc[year]) acc[year] = [];
+  acc[year].push(post);
+  return acc;
+}, {});
+
+const years = Object.keys(postsByYear).map(Number).sort((a, b) => b - a);
 ---
 
-<Layout 
+<Layout
   title={PAGE_SEO.tutorials.title}
   description={PAGE_SEO.tutorials.description}
   keywords={PAGE_SEO.tutorials.keywords}
 >
-  <main class="flex flex-col gap-20">
-    <h1 class="text-2xl text-neutral-100">Posts</h1>
+  <main class="flex flex-col gap-16">
+    <div class="flex flex-col gap-2">
+      <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-50 tracking-tight">Writing</h1>
+      <p class="text-neutral-500 dark:text-neutral-400">
+        Thoughts on software, infrastructure, and building things.
+      </p>
+    </div>
 
-    <article class="flex flex-col gap-4">
-      {
-        posts.map((post) => (
-          <a
-            class="group flex flex-col gap-2 border-t border-neutral-700 py-4 transition-all hover:text-neutral-100"
-            href={`/tutorials/${post.slug}`}
-          >
-            <div class="flex w-full items-center justify-between">
-              <h2 class="text-lg text-neutral-800 dark:text-neutral-100">{post.data.title}</h2>
+    <div class="flex flex-col gap-12">
+      {years.map((year) => (
+        <section class="flex flex-col gap-0">
+          <div class="mb-4 flex items-center gap-3">
+            <span class="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+              {year}
+            </span>
+            <div class="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
+          </div>
+          <div class="flex flex-col">
+            {postsByYear[year].map((post) => (
+              <a
+                class="group -mx-3 flex flex-col gap-1 rounded-lg px-3 py-4 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                href={`/tutorials/${post.slug}`}
+              >
+                <div class="flex w-full items-start justify-between gap-4">
+                  <h2 class="text-base font-semibold text-neutral-800 dark:text-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-white leading-snug">
+                    {post.data.title}
+                  </h2>
+                  <div class="flex shrink-0 items-center gap-2 pt-0.5">
+                    <span class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+                      {formatDate(post.data.publishedAt)}
+                    </span>
+                    <span class="text-neutral-300 dark:text-neutral-700">·</span>
+                    <span class="text-xs text-neutral-400 dark:text-neutral-500">
+                      {readingTime(post.body)}
+                    </span>
+                  </div>
+                </div>
+                {post.data.description && (
+                  <p class="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed line-clamp-2">
+                    {post.data.description}
+                  </p>
+                )}
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 mt-1">
+                    {post.data.tags.map((tag) => (
+                      <span class="text-xs text-neutral-400 dark:text-neutral-500">#{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
 
-              <div class="flex flex-row items-center gap-4">
-                <p class="text-neutral-600 dark:text-neutral-400">{formatDate(post.data.publishedAt)}</p>
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  class="transition-all duration-300 group-hover:translate-x-1"
-                >
-                  <path
-                    d="M5.25 12.75L12.75 5.25"
-                    stroke="#999999"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M5.25 5.25H12.75V12.75"
-                    stroke="#999999"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-            </div>
-            <p class="text-neutral-700 dark:text-neutral-500">{post.data.description}</p>
-          </a>
-        ))
-      }
-    </article>
-
-    <article class="flex flex-col gap-8">
-      <header class="flex w-full flex-row justify-between gap-2">
-        <h3 class="text-lg text-neutral-800 dark:text-neutral-100">Get in touch</h3>
-      </header>
-      <p>
+    <article class="flex flex-col gap-6 border-t border-neutral-200 dark:border-neutral-800 pt-10">
+      <h3 class="text-base font-semibold text-neutral-800 dark:text-neutral-100">Get in touch</h3>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">
         <Link
           href="https://cal.com/arvind-singharpuria"
           label="Schedule a call"
@@ -73,7 +95,6 @@ const posts = (await getCollection("posts")).sort(function (first, second) {
           class="font-semibold"
         /> or follow me via my social links.
       </p>
-
       <SocialLinks />
     </article>
   </main>

@@ -1,38 +1,85 @@
 .post p {
-  @apply leading-7 text-neutral-700 dark:text-neutral-300;
+  @apply text-base leading-7 text-neutral-700 dark:text-neutral-300 mb-5;
+}
+
+.post h1 {
+  @apply mt-10 mb-4 text-2xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50;
 }
 
 .post h2 {
-  @apply mt-6 text-3xl text-neutral-800 dark:text-neutral-100;
+  @apply mt-10 mb-4 text-xl font-bold tracking-tight text-neutral-900 dark:text-neutral-50;
 }
 
 .post h3 {
-  @apply mt-4 text-xl text-neutral-800 dark:text-neutral-100;
+  @apply mt-8 mb-3 text-lg font-semibold text-neutral-800 dark:text-neutral-100;
+}
+
+.post h4 {
+  @apply mt-6 mb-2 text-base font-semibold text-neutral-800 dark:text-neutral-100;
 }
 
 .post code {
-  @apply rounded-sm bg-neutral-200 dark:bg-neutral-800 px-1.5 py-0.5 text-sm font-mono;
-  @apply text-neutral-800 dark:text-neutral-200;
+  @apply rounded bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 text-sm font-mono;
+  @apply text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700;
 }
 
 .post a {
-  @apply text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300;
+  @apply text-neutral-900 dark:text-neutral-100 underline underline-offset-2 decoration-neutral-400 dark:decoration-neutral-600;
+  @apply hover:decoration-neutral-700 dark:hover:decoration-neutral-300 transition-colors;
 }
 
 .post ul {
-  @apply list-disc;
+  @apply list-disc pl-6 mb-5 space-y-1.5 text-neutral-700 dark:text-neutral-300 text-base leading-7;
+}
+
+.post ol {
+  @apply list-decimal pl-6 mb-5 space-y-1.5 text-neutral-700 dark:text-neutral-300 text-base leading-7;
+}
+
+.post li {
+  @apply leading-7;
 }
 
 .post blockquote {
-  @apply flex flex-row gap-2 before:block before:h-auto before:w-1 before:max-w-[1px] before:bg-red-400 before:content-[''];
+  @apply my-6 pl-4 border-l-2 border-neutral-300 dark:border-neutral-700;
+  @apply italic text-neutral-600 dark:text-neutral-400;
+}
+
+.post blockquote p {
+  @apply mb-0;
 }
 
 .post pre {
-  @apply relative rounded-lg p-4 my-4 overflow-x-auto border border-neutral-200 dark:border-neutral-700;
-  @apply bg-neutral-100 dark:bg-neutral-800;
-  @apply shadow-sm;
+  @apply relative rounded-xl p-5 my-6 overflow-x-auto;
+  @apply border border-neutral-200 dark:border-neutral-800;
+  @apply bg-neutral-50 dark:bg-neutral-900;
+  @apply text-sm shadow-sm;
 }
 
 .post pre > code {
-  @apply bg-transparent text-sm;
+  @apply bg-transparent border-0 p-0 text-sm text-inherit;
+}
+
+.post img {
+  @apply rounded-xl my-6 w-full;
+}
+
+.post hr {
+  @apply my-8 border-neutral-200 dark:border-neutral-800;
+}
+
+.post table {
+  @apply w-full text-sm mb-6 border-collapse;
+}
+
+.post th {
+  @apply text-left font-semibold text-neutral-800 dark:text-neutral-200 border-b border-neutral-200 dark:border-neutral-800 pb-2;
+}
+
+.post td {
+  @apply py-2 border-b border-neutral-100 dark:border-neutral-900 text-neutral-700 dark:text-neutral-300;
+}
+
+.post strong {
+  @apply font-semibold text-neutral-900 dark:text-neutral-50;
 }

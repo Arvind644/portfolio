@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import formatDate from "@/utils/formatDate";
+import readingTime from "@/utils/readingTime";
 import { getArticleSchema, SEO_CONFIG } from "@/data/seo";
 import { SITE_URL } from "@/data/config";
 
@@ -21,6 +22,14 @@ type Props = {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
+const allPosts = (await getCollection("posts"))
+  .filter((p) => p.data.isPublish)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+
+const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+
 const siteUrl = SITE_URL.endsWith('/') ? SITE_URL.slice(0, -1) : SITE_URL;
 const articleUrl = `${siteUrl}/tutorials/${post.slug}`;
 
@@ -31,9 +40,11 @@ const articleSchema = getArticleSchema({
   publishedAt: post.data.publishedAt,
   siteUrl,
 });
+
+const estimatedReadingTime = readingTime(post.body);
 ---
 
-<Layout 
+<Layout
   title={`${post.data.title} | ${SEO_CONFIG.siteName}`}
   description={post.data.description}
   keywords={["tutorial", "blog", "technical article"]}
@@ -44,44 +55,158 @@ const articleSchema = getArticleSchema({
     description: post.data.description,
   }}
 >
-  <main class="post mx-auto flex w-full max-w-prose flex-col gap-4">
-    <header role="presentation">
-      <h1 class="text-md">
-        {post.data.title} - {formatDate(post.data.publishedAt)}
+  <!-- Reading progress bar -->
+  <div id="progress-container" class="fixed top-0 left-0 right-0 z-50 h-0.5 bg-transparent">
+    <div id="progress-bar" class="h-full w-0 bg-neutral-400 dark:bg-neutral-500 transition-none"></div>
+  </div>
+
+  <main class="post mx-auto flex w-full max-w-prose flex-col gap-8">
+    <!-- Back link -->
+    <a
+      href="/tutorials"
+      class="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors w-fit"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M8.75 2.625L4.375 7L8.75 11.375" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All posts
+    </a>
+
+    <!-- Post header -->
+    <header class="flex flex-col gap-4">
+      <h1 class="text-2xl font-bold leading-tight tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
+        {post.data.title}
       </h1>
-      <p class="italic">{post.data.description}</p>
+
+      <div class="flex flex-wrap items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400">
+        <time datetime={post.data.publishedAt.toISOString()}>
+          {formatDate(post.data.publishedAt)}
+        </time>
+        <span class="text-neutral-300 dark:text-neutral-700">·</span>
+        <span>{estimatedReadingTime}</span>
+      </div>
+
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => (
+            <span class="inline-flex items-center rounded-full border border-neutral-200 dark:border-neutral-800 px-2.5 py-0.5 text-xs font-medium text-neutral-600 dark:text-neutral-400">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {post.data.description && (
+        <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed border-l-2 border-neutral-300 dark:border-neutral-700 pl-4 italic">
+          {post.data.description}
+        </p>
+      )}
     </header>
 
-    <Content />
+    <div class="h-px bg-neutral-200 dark:bg-neutral-800" />
+
+    <!-- Post content -->
+    <article>
+      <Content />
+    </article>
+
+    <div class="h-px bg-neutral-200 dark:bg-neutral-800" />
+
+    <!-- Prev / Next navigation -->
+    <nav class="flex items-center justify-between gap-4 text-sm">
+      {prevPost ? (
+        <a
+          href={`/tutorials/${prevPost.slug}`}
+          class="group flex flex-col gap-0.5 max-w-[45%]"
+        >
+          <span class="text-xs text-neutral-400 dark:text-neutral-500 uppercase tracking-wide">Previous</span>
+          <span class="text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors line-clamp-2">
+            ← {prevPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <div />
+      )}
+      {nextPost ? (
+        <a
+          href={`/tutorials/${nextPost.slug}`}
+          class="group flex flex-col gap-0.5 max-w-[45%] text-right ml-auto"
+        >
+          <span class="text-xs text-neutral-400 dark:text-neutral-500 uppercase tracking-wide">Next</span>
+          <span class="text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-white transition-colors line-clamp-2">
+            {nextPost.data.title} →
+          </span>
+        </a>
+      ) : (
+        <div />
+      )}
+    </nav>
   </main>
+
+  <!-- Back to top button -->
+  <button
+    id="back-to-top"
+    aria-label="Back to top"
+    class="fixed bottom-8 right-8 hidden items-center justify-center rounded-full w-9 h-9 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors shadow-sm"
+  >
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M2.625 8.75L7 4.375L11.375 8.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 </Layout>
 
 <script>
-  // Add copy button to all code blocks
+  // Reading progress bar
+  const progressBar = document.getElementById('progress-bar');
+  if (progressBar) {
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = `${Math.min(progress, 100)}%`;
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  // Back to top button
+  const backToTop = document.getElementById('back-to-top');
+  if (backToTop) {
+    const toggleVisibility = () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.remove('hidden');
+        backToTop.classList.add('flex');
+      } else {
+        backToTop.classList.add('hidden');
+        backToTop.classList.remove('flex');
+      }
+    };
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Add copy buttons to code blocks
   document.addEventListener('DOMContentLoaded', () => {
     const codeBlocks = document.querySelectorAll('.post pre');
-
     codeBlocks.forEach((pre) => {
-      // Create copy button
       const button = document.createElement('button');
-      button.className = 'copy-code-btn absolute top-2 right-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-300';
+      button.className =
+        'copy-code-btn absolute top-2 right-2 px-2.5 py-1 rounded text-xs font-medium transition-all bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-600 dark:text-neutral-300';
       button.textContent = 'Copy';
-
-      // Add click handler
       button.addEventListener('click', async () => {
         const code = pre.querySelector('code');
         if (code) {
           await navigator.clipboard.writeText(code.textContent || '');
           button.textContent = 'Copied!';
           button.classList.add('bg-green-500', 'text-white', 'dark:bg-green-600');
-
           setTimeout(() => {
             button.textContent = 'Copy';
             button.classList.remove('bg-green-500', 'text-white', 'dark:bg-green-600');
           }, 2000);
         }
       });
-
       pre.appendChild(button);
     });
   });
