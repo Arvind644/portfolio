@@ -12,16 +12,16 @@ isPublish: true
 
 ## Table of Contents
 
-- [What is an AI Headshot Generator?](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Why Shotly AI is the Best AI Headshot Generator](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Key Features](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Speed Comparison: Seconds vs Hours](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Free AI Headshots](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [AI Headshots vs Professional Photography](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Best Use Cases](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [How to Create AI Headshots](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [Privacy & Data Security](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
-- [FAQs](https://www.notion.so/Shotly-AI-2c5411d434be80cda83de29fd3f3c3c5?pvs=21)
+- [What is an AI Headshot Generator?](#what-is-an-ai-headshot-generator)
+- [Why Shotly AI is the Best AI Headshot Generator](#why-shotly-ai-is-the-best-ai-headshot-generator)
+- [Key Features](#key-features-professional-ai-headshot-generation)
+- [Speed Comparison: Seconds vs Hours](#speed-comparison-why-shotly-ai-generates-headshots-in-seconds-not-hours)
+- [Free AI Headshots](#free-ai-headshots-professional-photos-for-everyone)
+- [AI Headshots vs Professional Photography](#ai-headshots-vs-professional-photography-2025-comparison)
+- [Best Use Cases](#best-use-cases-for-ai-generated-headshots)
+- [How to Create AI Headshots](#how-to-create-ai-headshots-step-by-step-guide)
+- [Privacy & Data Security](#privacy--data-security)
+- [FAQs](#frequently-asked-questions-about-ai-headshots)
 
 ## What is an AI Headshot Generator?
 
